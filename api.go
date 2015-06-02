@@ -44,6 +44,15 @@ type ChimpAPI struct {
 	endpoint  string
 }
 
+
+var httpClient = &http.Client{}
+// SetHTTPClient overrides the default HTTP client.
+// This is useful if you're running in a Google AppEngine environment
+// where the http.DefaultClient is not available.
+func SetHTTPClient(client *http.Client) {
+	httpClient = client
+}
+
 // see https://mandrillapp.com/api/docs/
 // currently supporting json output formats
 func NewMandrill(apiKey string) (*MandrillAPI, error) {
@@ -116,7 +125,8 @@ func runMandrill(api *MandrillAPI, path string, parameters map[string]interface{
 	if debug {
 		log.Printf("Request URL:%s", requestUrl)
 	}
-	client := &http.Client{Transport: api.Transport}
+	// client := &httpClient{Transport: api.Transport}
+	client := httpClient
 	resp, err := client.Post(requestUrl, "application/json", bytes.NewBuffer(b))
 	if err != nil {
 		return nil, err
