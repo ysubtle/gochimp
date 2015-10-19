@@ -28,8 +28,8 @@ import (
 )
 
 const (
-	mandrill_uri     = "mandrillapp.com/api/"
-	mandrill_version = "1.0"
+	mandrill_uri     = "mandrillapp.com"
+	mandrill_version = "/api/1.0"
 )
 
 type MandrillAPI struct {
@@ -44,8 +44,8 @@ type ChimpAPI struct {
 	endpoint  string
 }
 
-
 var httpClient = &http.Client{}
+
 // SetHTTPClient overrides the default HTTP client.
 // This is useful if you're running in a Google AppEngine environment
 // where the http.DefaultClient is not available.
