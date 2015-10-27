@@ -25,6 +25,7 @@ import (
 	"net/url"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 const (
@@ -125,6 +126,7 @@ func runMandrill(api *MandrillAPI, path string, parameters map[string]interface{
 	if debug {
 		log.Printf("Request URL:%s", requestUrl)
 	}
+	requestUrl = strings.Replace(requestUrl, "%2F", "/", -1)
 	// client := &httpClient{Transport: api.Transport}
 	client := httpClient
 	resp, err := client.Post(requestUrl, "application/json", bytes.NewBuffer(b))
